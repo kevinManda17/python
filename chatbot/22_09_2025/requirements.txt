@@ -1,0 +1,10 @@
+openai==1.109.1
+streamlit==1.32.0
+python-dotenv==1.0.1
+pypdf==5.1.0
+pdfplumber==0.11.9
+chromadb==0.5.23
+sentence-transformers==3.4.1
+transformers==4.46.3
+tokenizers==0.20.3
+numpy==1.26.4

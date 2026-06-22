@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} Welcome to IRON MANDA WEB PAGE {% endblock %}
+
+{%  block content %}
+    <div class="container ">
+        <h1>ABOUT IRON MANDA</h1>
+        <ol>
+         {% for i in name %}
+            <li> {{ i }} </li>
+        {% endfor%}
+        </ol>
+    </div>
+{% endblock %}
+

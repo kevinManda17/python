@@ -1,0 +1,104 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<center>
+    <div>
+        {% if user.is_authenticated %}
+    
+        <p class="text-success"> You Are Connected As : {{ user }}</p>
+    
+        {% if user.is_superuser %} 
+    
+            <p class="text-success">A Super User </p>
+    
+        {% endif %}
+    
+    {% else %}
+        <p class="text-danger">You Are Not Connected !</p>
+        <br><br>
+        <p>
+            <a href="{% url 'login'%}" 
+            class="btn btn-outline-primary"
+             style="display: flex;
+             width:200px;
+             align-items: center;
+             justify-content: center;
+             
+             "
+             
+        >Login Here</a>
+        </p>
+    
+    {% endif %}
+</center>
+
+</div>
+
+    <center>
+
+        <h2>Hello {{ name }} events for {{year}} - {{month}}<h2>
+            
+                As of {{ time }}
+
+            {{ month_number }}
+        
+            {{ cal|safe }}
+            <p>&emsp;</p>
+
+            <h3>Events This Month ...</h3>
+            {% if event_list%}
+    
+    </center>
+                {% for event in event_list %}
+                
+                <div class="card">
+                    <div class="card-header">
+                        {{ event }}
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Venue : {{ event.venue }}</h5>
+                      <p class="card-text">
+                        <ul>
+                            <li class="text-success"> Date : {{ event.event_date }}</li> 
+                            <li>Manager : {{ event.manager }}</li>
+                            <li>Description : <br>&emsp; {{ event.description }}</li> 
+                            <li>attendees : <br> &emsp;
+                            {% for user in event.attendees.all %}
+                                 {{ user }} <br>&emsp;
+                            {% endfor %}
+                            </li>
+                        </ul>
+                      </p>
+                    </div>
+        
+        
+                    <div class="card-footer text-body-secondary">
+                      {% if user.is_authenticated %}
+                          {% if user == event.manager %}
+                          
+                            <a href="{% url 'update-event' event.id %}" class="btn btn-outline-secondary btn-sm">Update Event </a>
+                            <a href="{% url 'delete-event' event.id %}" class="btn btn-outline-danger btn-sm">Delete Event </a>
+                      
+                        {% elif event.manager == None %}
+                                                
+                            <a href="{% url 'update-event' event.id %}" class="btn btn-outline-secondary btn-sm">Update Event </a>
+                            <a href="{% url 'delete-event' event.id %}" class="btn btn-outline-danger btn-sm">Delete Event </a>
+                            {% endif %}
+                      {% endif %} 
+                      </div>
+        
+        
+                  </div>
+                  <br><br>
+                {% endfor %}
+
+            {% else %}
+                Sorry ...There are no events this month 
+
+            {% endif %}
+            
+
+
+
+{% endblock %}
+

@@ -1,0 +1,43 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <center>
+       
+        <h1>Add Venue To Database </h1>
+        &emsp;
+        ID:{{user.id }} Is For 
+         Owner : <p class="text-danger">{{ venue_owner }} </p>
+        {% if submitted %}
+
+          <p>  Your Venue Was Submitted successFully !!! </p> <br><br>
+
+            <a href="{% url 'list-venues' %}" class="btn btn-outline-primary">Going Back to List venues</a>
+            <br><br>
+
+            <a href="{% url 'add-event' %}" class="btn btn-outline-primary">Going To Add Event </a>
+
+        {% else %}
+
+            <form action="" method=POST  enctype="multipart/form-data">
+                    {% csrf_token %}
+                        {{form.as_p}}
+                <input type="submit" value="submit" class="btn btn-secondary">
+            </form>
+
+            <br><br>
+
+            <a href="{% url 'add-event' %}" class="btn btn-outline-primary">Going To Add Event </a>
+        {% endif%}    
+    </center> 
+    {% else %}
+    <center><h1>Sorry ! You Must Be Logged In To View This Page</h1> <br><br>
+
+    <a href="{% url 'login' %}" class="btn btn-outline-primary">Login Here</a>
+
+</center>
+<br><br>
+
+
+{% endif %}
+{% endblock %}

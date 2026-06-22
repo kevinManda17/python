@@ -1,0 +1,14 @@
+{% include 'accounts/begin_end/begin.html' %}
+
+
+<h1>Incription</h1>
+<form method="post">
+
+    {% csrf_token %}
+    {{ form_register.as_p }}
+    <input type="submit" value="S'incrire ">
+</form>
+
+
+
+{% include 'accounts/begin_end/end.html' %}

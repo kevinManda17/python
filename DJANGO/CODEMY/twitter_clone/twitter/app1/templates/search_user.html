@@ -1,0 +1,51 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<center>  <h1>Search User !</h1>  
+<br>
+<form method="POST" >
+    {% csrf_token %}
+    <div class="container">
+        <div class="col-6">
+            <input type="text" class="form-control  form-control-sm " placeholder="Search User " name="search_user">  
+            <br>
+            <center> <button type="submit"  class= "btn btn-outline-primary btn-sm " >Search user</button> </center> 
+        </div>
+    </div>
+</form>
+<br> <br> 
+</center> 
+{% if searched   and search %}
+    <h3>   Results About :  {{ search }}   </h3>
+    {% for user in searched  %}
+        <div class= "card mb-3 p-2 "  style = "max-width: 540px ">
+            <div class= "row g-0 ">
+                <div class="col-md-5">
+                    {% if user.profile.profile_image %}
+                        <img src="{{ user.profile.profile_image.url }}" alt="Profile Picture of {{user.profile.user.username }} " class="rounded-start " width=200px height=200px >
+                    {% else %}
+                        <img src="{% static 'img/default.png'%}" alt="default profile "  class="rounded-start ">
+                    {% endif %}
+                </div>
+                <div class= "col-md-7 ">
+                    <h5 class="card-body">Username: {{ user.profile }}</h5>
+                    <p class="card-text">Link : 
+                        <a href="{% url 'profile' user.profile.user.id %}">
+                            @{{ user.profile|lower }} 
+                        </a> <br>
+                        <small class= "text-muted">
+                            Last Updated : {{user.profile.date_modified }}
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    {% endfor %}
+{% else %}
+        {% if searched == None %}
+        {% else %}
+        <center><p><h3>Sorry Your Search About <p class="text-danger">"{{ search }}"</p> doesn't exist ... </h3><p></center>
+        {% endif %}
+{% endif %}
+{% endblock%}

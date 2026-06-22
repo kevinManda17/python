@@ -1,0 +1,44 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            venue
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ venue }}</h5>
+          <p class="card-text">
+            <ul>
+              <li>{{ venue.name }}</li>
+              <li>{{ venue.address }}</li>
+              <li>{{ venue.zip_code }}</li>
+              <li>{{ venue.phone }}</li>
+            <a href="{{ venue.web }}">{{ venue.email_address }}</a>
+            <li>Owner : {{ venue_owner }}</li>
+            <li>Owner's Email: {{ venue_owner.email }}</li>
+            {% if venue.venue_image %}
+              &emsp;<img src="{{venue.venue_image.url }}" alt="kipushi street 2" class="images"> 
+            {% endif %}
+
+            </ul>
+            <center>
+
+                {%if user.is_authenticated %} 
+                    {% if user == event.manager %}
+                    <td align="right" >
+
+                        <a href="{% url 'update-venue' venue.id %}" class="btn btn-outline-secondary btn-sm">Update </a> 
+                        <a href="{% url 'delete-venue' venue.id %}" class="btn btn-outline-danger btn-sm">Delete </a>
+                    </td>
+            
+                    {% endif %}   
+                {% endif %}
+
+            </center>
+          </p>
+        </div>
+      </div>
+      <br><br>
+
+{% endblock %}

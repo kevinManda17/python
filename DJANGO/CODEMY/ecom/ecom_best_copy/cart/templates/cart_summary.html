@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Header-->
+<header class="bg-dark py-5">
+<div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Shopping cart</h1>
+        <p class="lead fw-normal text-white-50 mb-0">View Your Cart ...</p>
+    </div>
+</div>
+</header> 
+<div class="container">
+{% if cart_products %}
+        {% for pro in cart_products %}
+        <div class="container">
+            <br>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ product.image.url }}" alt="" class="img-fluid rounded-start">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <center>
+                            <h5 class="card-title">
+                                {{ product.name }}
+                            </h5>
+                            <br>
+                            <p class="card-text">
+                                {{ product.description }}
+                            </p>
+                            <br><br>
+                            {% if product.is_sale %}
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{ product.name }}</h5>
+                                    <!-- sale  -->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        &nbsp;&nbsp; Sale  &nbsp;&nbsp;
+                                        <div class="bi-star-fill"></div> 
+                                    </div>
+                                    <!-- Product price-->
+                                    <strike>
+                                        ${{ product.price }} 
+                                    </strike> &nbsp;
+                                    ${{ product.sale_price }} 
+                                </div>
+                            </div>
+                            {% else %}
+                                ${{ product.price }}
+                                <br>
+                                ID: {{ product.pk }}
+                            {% endif %}
+                            <br><br>
+                            <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+                            <br><br>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <center>
+            <br><br>
+            <h1>There's Nothing  in your cart !!! </h1>
+        </center>
+    {% endif %}
+</div>
+<br><br><br><br>
+{% endblock %}

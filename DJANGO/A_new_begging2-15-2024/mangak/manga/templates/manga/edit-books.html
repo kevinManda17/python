@@ -1,0 +1,9 @@
+{% include 'manga/begin_end/begin.html' %}
+<h1>GESTION DE VOS LIVRES  ICI </h1>
+<p><h2>le formulaire des mangas</h2></p>
+<form  method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="modifier">
+</form>
+{% include 'manga/begin_end/end.html' %}

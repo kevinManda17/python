@@ -1,0 +1,22 @@
+# backend
+Django>=4.2,<5
+djangorestframework>=3.14
+djangorestframework-simplejwt>=5.2
+django-cors-headers>=3.14
+psycopg2-binary>=2.9
+
+# utils / ML
+pandas>=2.0
+numpy>=1.25
+scikit-learn>=1.2
+joblib>=1.3
+
+# optional deep learning
+# tensorflow (CPU) or torch (choose one depending on tes préférences/hardware)
+tensorflow>=2.14    # verifier compatibilite avec ton environnement
+# torch>=2.2.0       # alternative: PyTorch (installe selon instructions officielles / CUDA)
+
+# deployment
+gunicorn>=20.1
+whitenoise>=6.5
+python-dotenv>=1.0

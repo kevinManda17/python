@@ -1,0 +1,22 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta  cahrset="utf-8">
+    <title>Mes mangas</title>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'manga/css/style.css' %}">
+</head>
+<body>
+    <h1>Welcome on manga channel </h1>
+    <p>{{message}}</p>
+
+    <div>
+        <ul>
+            {% for book in books %}
+                <li><a href="{% url 'manga:show' book.id %}">{{book.title}}</a></li>
+            {%endfor%}
+        </ul>
+    </div>
+</body>
+</html>

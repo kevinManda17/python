@@ -1,0 +1,28 @@
+{% include 'MANGALIB_k/begin_end/begin.html' %}
+
+
+    <h1>Welcome on MangaLib_k channel !</h1>
+    <p><a href="{% url 'MANGALIB_K:add' %}">+ Add Some Books Here</a></p>
+    <table>
+        <tr class="title">
+            <th>Name</th>
+            <th>Author</th>
+            <th>Quantity</th>
+            <th colspan="2" class="action-color">Action</th>
+        </tr>
+        {%for book in books %}
+        <tr>
+            <td><a href="{% url 'MANGALIB_K:show' book.id %}">{{book.title}}</a></td>
+            <td>{{book.title}}</td>
+            <td>{{book.quantity}}</td>
+            
+            <td><a href="{% url  'MANGALIB_k:edit' %}" style="color:rgb(67, 67, 179)">Edit</a></td>
+            <td><a href="{% url 'MANGALIB_k:delete' %}" style="color:red">Delete</a></td>
+
+        </tr>
+        {%endfor%}
+    </table>
+
+    {%comment%}
+    {%endcomment%}
+{% include 'MANGALIB_k/begin_end/end.html' %}

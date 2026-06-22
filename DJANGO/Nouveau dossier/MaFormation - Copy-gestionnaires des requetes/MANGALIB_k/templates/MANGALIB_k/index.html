@@ -1,0 +1,16 @@
+{% include 'MANGALIB_k/begin_end/begin.html' %}
+
+
+    <h1>Welcome on MangaLib_k channel !</h1>
+   <ul>
+    {%comment%}
+        {%for book in books%}
+        
+            <li><a href="{% url 'MANGALIB_k:show' book.id %}">{{book.title}}</a></li>
+        {%endfor%}
+        {%endcomment%}
+   </ul>
+   <p><a href="{% url 'MANGALIB_k:add' %}" class="ancre">[+]</a></p>
+
+
+{% include 'MANGALIB_k/begin_end/end.html' %}

@@ -1,0 +1,20 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+django-filter
+django-redis
+psycopg2-binary
+gunicorn
+redis
+celery
+python-dotenv
+whitenoise==6.6.0
+
+# Development dependencies
+black
+flake8
+isort
+coverage
+locust
+pytest
+pytest-django

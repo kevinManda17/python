@@ -1,0 +1,43 @@
+{% include 'MANGALIB_k/begin_end/begin.html' %}
+
+
+{% if user.is_authenticated %}
+{%comment%}
+    <p>Connecte sous {{user.username}}</p> | <a href="{% url 'account:logout_user' %}">Deconnexion</a>
+
+{%else%}
+    <p><a href="{% url 'account:login_user' %}">Connexion</a>
+{%endcomment%}
+        <a href="{% url 'account:register' %}">Inscription</a></p>
+{%endif%}
+<h1>Welcome on MangaLib_k channel !</h1>
+<p><a herf="{% url 'MANGALIB_k:add' %}">Add some books</a></p>
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Auteur</th>
+        <th>Quantite</th>
+        <th colspan="2">Action </th>
+    </tr>
+    {%for book in books %}
+    
+    <tr>
+        <td><a herf="{% url 'show' %}">{{book.title}}</a></td>
+        <td>{{book.author}}</td>
+        <td>{{book.quantity}}</td>
+        {%comment%}
+        <td><a herf="{% url 'MANGALIB_k:edit' %}">Edit</a></td>
+        
+        <td><a href="{% url 'MANGALIB_k:delete' %}">Delete</a></td>
+        {%endcomment%}
+       
+    </tr>
+    {%endfor%}
+</table>
+{% if perms.MANGALIB_k.delete_book%}
+    <p>Vous avez une permission !</p>
+{% endif %}
+
+{%comment%}
+{%endcomment%}
+{% include 'MANGALIB_k/begin_end/end.html' %}

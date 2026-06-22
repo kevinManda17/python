@@ -1,0 +1,18 @@
+{% load static %}  <!--lw loader du fichier static -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Mes mangas </title>
+    <link rel="stylesheet" href="{% static 'global.css' %}"
+    <link rel="stylesheet" href="{% static 'mangalib/css/style.css' %}">
+</head>
+<body>
+    <h1>bienvenu sur mangalib</h1>
+    <p>{{ message }}</p>
+    <h2>Contenu d'un autre fichier </h2>
+    {%include "./other.html"%}      <!--on inclus un fichier html externe -->
+    <p>Rendez-vous<a href="{% url 'indexofmangalib' %}">Mangalib</a></p>
+</body>
+</html>

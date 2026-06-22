@@ -1,0 +1,26 @@
+# --- Base Python ---
+python-dotenv==1.0.1          # Pour gérer les clés API dans un fichier .env
+requests==2.32.3             # Pour faire des appels HTTP
+tqdm==4.66.4                 # Progress bar (utile si tu charges des données)
+
+# --- LLM (open-source & API compatible) ---
+transformers==4.43.4         # Librairie Hugging Face Transformers
+accelerate==0.33.0           # Pour tirer parti du GPU ou CPU automatiquement
+torch==2.4.0                 # Backend deep learning (PyTorch)
+sentencepiece==0.2.0         # Tokenizer pour modèles LLM
+datasets==2.21.0             # Si tu veux manipuler des datasets facilement
+
+# --- Chat & Interface ---
+fastapi==0.115.2             # Backend API rapide pour ton chatbot
+uvicorn==0.30.6              # Serveur ASGI pour lancer ton chatbot
+pydantic==2.9.2              # Validation des entrées/sorties
+python-multipart==0.0.9      # Pour gérer les fichiers uploadés si besoin
+
+# --- Optionnel pour UI ---
+gradio==4.41.0               # Interface web simple pour discuter avec ton chatbot
+
+# --- Outils NLP (optionnels mais utiles) ---
+nltk==3.9.1                  # NLP classique (tokenisation, stopwords)
+spacy==3.8.2                 # NLP avancé (entités nommées)
+sclick
+

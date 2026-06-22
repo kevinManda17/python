@@ -1,0 +1,36 @@
+body
+{
+    background-color: #000;
+    color:white;
+    margin: 0;
+    width: 800px;
+    height: 100%;
+};
+
+h2
+{
+    color: green;
+}
+li
+{
+    color: white;
+}
+p a
+{
+    color:red;
+    text-decoration: underline;
+}
+p a.ancre
+{
+    color: red;
+}
+
+a
+{
+    text-decoration: none;
+}
+ul li a 
+{
+    color:white ;
+    text-decoration: none;
+}

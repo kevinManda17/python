@@ -1,0 +1,6 @@
+{%include './begin_end/begin.html'%}
+    <h1>{{book.title}}</h1>
+    <p>Quantite: {{book.quatity}}</p>
+    <p>Auteur: {{book.author.name}}</p>
+    <p><a href="{% url 'mangalib:index' %}" style="color:red">&laquo;Revenir a la liste des livres </a></p>
+{% include './begin_end/end.html'%}

@@ -1,0 +1,19 @@
+{% include 'manga/begin_end/begin.html' %}
+
+
+<h1>welcome  on manga channel: page for forms !</h1>
+<p>
+
+    <h2>L'EXERCICE SUR FORMULAIRES : </h2> 
+</p>
+<form  method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="valider">
+</form>
+
+
+
+
+
+{% include 'manga/begin_end/end.html' %}

@@ -1,0 +1,20 @@
+{% include 'manga/begin_end/begin.html' %}
+
+    <h1>Welcome on manga channel </h1>
+    <p>{{message}}</p>
+
+    <div>
+        <ul>
+            {% for book in books %}
+                <li><a href="{% url 'manga:show' book.id%}">{{book.title}}</a></li>
+            {%endfor%}
+        </ul>
+
+        <p>
+            <a href="{% url 'manga:add' %}">| Add |</a>
+            <a href="{% url 'manga:edit' %}">| edit |</a> 
+            <a href="{% url 'manga:remove' %}">| remove |</a>
+        </p>
+    </div>
+
+{% include 'manga/begin_end/end.html' %}

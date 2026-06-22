@@ -1,0 +1,11 @@
+{% include 'manga/begin_end/begin.html' %}
+
+    <h1>Welcome on manga channel </h1>
+    <h1>{{book.title}}</h1>
+
+    <p>Quantite: {{book.quantity}}</p>
+    <p>Auteur: {{book.author.name }}</p>
+    <p><a href="{% url 'manga:index' %}">&laquo;Revenir a la liste des livres</a></p>
+
+
+{% include 'manga/begin_end/end.html' %}

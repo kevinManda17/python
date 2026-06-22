@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<h1>Profile List  !</h1>
+<br>
+    {% if profiles %}
+        {% for profile in profiles %}
+            <div class= "card mb-3 p-2 "  style = "max-width: 540px ">
+                <div class= "row g-0 ">
+                    <div class="col-md-5">
+                        {% if profile.profile_image %}
+                            <img src="{{ profile.profile_image.url }}" alt="Profile Picture of {{profile.user.username }} " class="rounded-start " width=200px height=200px >
+                        {% else %}
+                            <img src="{% static 'img/default.png'%}" alt="default profile "  class="rounded-start ">
+                        {% endif %}
+                    </div>
+                    <div class= "col-md-7 ">
+                        <h5 class="card-body">Username: {{ profile }}</h5>
+                        <p class="card-text">Link : 
+                            <a href="{% url 'profile' profile.user.id %}">
+                                @{{ profile|lower }} 
+                            </a> <br>
+                            <small class= "text-muted">
+                                Last Updated : {{profile.date_modified }}
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        {% endfor %}
+    {% endif %}
+{% endblock%}

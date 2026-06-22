@@ -1,0 +1,10 @@
+{%include './begin_end/begin.html'%}
+    <h1>bienvenu sur mangalib</h1>
+    <ul>
+      {%for book in books %}
+        <li><a href="{% url 'mangalib:show' book.id %}" style="color:whitesmoke">{{book.title }}</a></li> 
+      {%endfor%}     
+    </ul> 
+   c'est ici que j'ai eu un probleme alors j'ai recommence 
+    
+{% include './begin_end/end.html'%}

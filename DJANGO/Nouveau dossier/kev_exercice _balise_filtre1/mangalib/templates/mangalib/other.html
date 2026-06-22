@@ -1,0 +1,29 @@
+<!--Une page HTML a ajouter dans une autre page HTML avec les balises et filtres-->
+
+<ul>
+    <li> je mets tout et d'autres choses </li>
+    <li>{% lorem 6 w random  %}</li>
+</ul>
+  <!-- balises  -->
+  {% now "d/m/Y H:i:s l F" %}    <!--on recuper une date -->
+  <h2>Contenu d'un autre fichier </h2>
+  {%include "./other.html"%}      <!--on inclus un fichier html externe -->
+  <p>Rendez-vous<a href="{% url 'indexofmangalib' %}">Mangalib</a></p>
+  <!--verifier une liste de news -->
+  {%if numberNews > 0 %}
+    <p>Des news sont disponibles ...</p>
+  {%else%}
+    <p>Pas de news ...</p>
+  {%endif%}
+
+<!--une boucle -->
+{%for u in usersList %}
+    <li>{{u}}</li>
+{%endfor%}
+<!--Pour une liste vide -->
+{% for u in usersList2 %}
+  <p>{{u}}</p>
+{%empty%}
+  <p>Pas d'utilisateurs </p>
+{%endfor%}
+<!--debut des filtres -->

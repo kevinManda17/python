@@ -1,0 +1,10 @@
+from django.contrib import admin
+from .models import Task 
+
+class TaskAdmin(admin.ModelAdmin):
+    # class TaskAdmin(admin.ModelAdmin):
+        list_display = ("name", "description","colored_due_date")
+        read_only = ("created_date")
+
+
+admin.site.register(Task, TaskAdmin)

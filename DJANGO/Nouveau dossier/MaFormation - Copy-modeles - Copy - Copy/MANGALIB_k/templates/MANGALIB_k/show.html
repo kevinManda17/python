@@ -1,0 +1,18 @@
+{% load static %}
+{% load customtags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'global.css'%}">
+    <link rel="stylesheet" href="{% static 'MANGALIB_k/css/mystyle.css' %}">
+    <title>Mes Mangas</title>
+</head>
+<body>
+    <h1>{{book.title}}</h1>
+    <p>Quantite: {{book.quantity}}</p>
+    <p>Auteur:{{book.author.name }}</p>
+    <p><a href="{% url 'MANGALIB_k:index' %}">&laquo;Revenir a la liste des livres</a></p>  
+</body>
+</html>

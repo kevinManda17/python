@@ -1,0 +1,11 @@
+{% include 'MANGALIB_k/begin_end/begin.html' %}
+
+
+<h1>Welcome on MangaLib_k channel !</h1>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="valider">
+</form>
+
+{% include 'MANGALIB_k/begin_end/end.html' %}

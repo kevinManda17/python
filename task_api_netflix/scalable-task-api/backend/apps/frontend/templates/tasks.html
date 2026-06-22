@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mes Tâches - Task API{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="page-header">
+        <h1><i class="fas fa-list-check"></i> Gestion des Tâches</h1>
+        <p>Créez, modifiez et suivez vos tâches</p>
+    </div>
+    
+    <!-- Section création de tâche -->
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-plus-circle"></i> Nouvelle tâche</h2>
+        </div>
+        <form id="create-task-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <input type="text" name="title" id="task-title" class="form-control" 
+                           placeholder="Titre de la tâche" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="description" id="task-description" class="form-control" 
+                           placeholder="Description (optionnelle)">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Ajouter
+            </button>
+        </form>
+    </div>
+    
+    <!-- Filtres -->
+    <div class="card">
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <input type="text" id="search-input" class="form-control" 
+                   placeholder="Rechercher une tâche..." style="max-width: 300px;">
+            <select id="filter-select" class="form-control" style="max-width: 200px;">
+                <option value="all">Toutes les tâches</option>
+                <option value="false">En cours</option>
+                <option value="true">Terminées</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Liste des tâches -->
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-list"></i> Mes tâches</h2>
+            <span id="task-count" class="stat-number" style="font-size: 1.2rem;">0</span>
+        </div>
+        <div id="tasks-list" class="task-list">
+            <div class="empty-state">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Chargement des tâches...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentTasks = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('access_token');
+    
+    if (!token) {
+        window.location.href = '{% url "frontend:login" %}';
+        return;
+    }
+    
+    loadTasks();
+    
+    // Création de tâche
+    document.getElementById('create-task-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            title: document.getElementById('task-title').value,
+            description: document.getElementById('task-description').value,
+            completed: false
+        };
+        
+        fetch('/api/tasks/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(() => {
+            document.getElementById('task-title').value = '';
+            document.getElementById('task-description').value = '';
+            loadTasks();
+        });
+    });
+    
+    // Recherche
+    document.getElementById('search-input').addEventListener('input', debounce(loadTasks, 300));
+    
+    // Filtre
+    document.getElementById('filter-select').addEventListener('change', loadTasks);
+});
+
+function loadTasks() {
+    const token = localStorage.getItem('access_token');
+    const search = document.getElementById('search-input').value;
+    const filter = document.getElementById('filter-select').value;
+    
+    let url = '/api/tasks/';
+    const params = new URLSearchParams();
+    
+    if (search) params.append('search', search);
+    if (filter !== 'all') params.append('completed', filter);
+    
+    if (params.toString()) url += '?' + params.toString();
+    
+    fetch(url, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(response => {
+        if (response.status === 401) {
+            window.location.href = '{% url "frontend:login" %}';
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        currentTasks = data.results || data;
+        renderTasks(currentTasks);
+        document.getElementById('task-count').textContent = currentTasks.length;
+    });
+}
+
+function renderTasks(tasks) {
+    const container = document.getElementById('tasks-list');
+    
+    if (tasks.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p>Aucune tâche trouvée</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = tasks.map(task => `
+        <div class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+            <div class="task-content">
+                <div class="task-title">${escapeHtml(task.title)}</div>
+                <div class="task-description">${escapeHtml(task.description || 'Aucune description')}</div>
+                <div class="task-meta">
+                    <span><i class="far fa-calendar"></i> ${new Date(task.created_at).toLocaleDateString('fr-FR')}</span>
+                    <span><i class="far fa-${task.completed ? 'check-circle' : 'clock'}"></i> ${task.completed ? 'Terminée' : 'En cours'}</span>
+                </div>
+            </div>
+            <div class="task-actions">
+                <button class="btn btn-outline btn-icon" onclick="toggleTask(${task.id}, ${!task.completed})" 
+                        title="${task.completed ? 'Marquer en cours' : 'Marquer terminée'}">
+                    <i class="fas fa-${task.completed ? 'undo' : 'check'}"></i>
+                </button>
+                <button class="btn btn-outline btn-icon" onclick="editTask(${task.id})" title="Modifier">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-danger btn-icon" onclick="deleteTask(${task.id})" title="Supprimer">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleTask(id, completed) {
+    const token = localStorage.getItem('access_token');
+    
+    fetch(`/api/tasks/${id}/`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ completed: completed })
+    })
+    .then(() => loadTasks());
+}
+
+function editTask(id) {
+    const task = currentTasks.find(t => t.id === id);
+    const newTitle = prompt('Modifier le titre:', task.title);
+    
+    if (newTitle !== null) {
+        const token = localStorage.getItem('access_token');
+        
+        fetch(`/api/tasks/${id}/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ title: newTitle })
+        })
+        .then(() => loadTasks());
+    }
+}
+
+function deleteTask(id) {
+    if (confirm('Supprimer cette tâche ?')) {
+        const token = localStorage.getItem('access_token');
+        
+        fetch(`/api/tasks/${id}/`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+        .then(() => loadTasks());
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+</script>
+{% endblock %}

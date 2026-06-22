@@ -1,0 +1,32 @@
+{% include 'manga/begin_end/begin.html' %}
+
+    {% if user.is_authenticated %}
+        <p>Connecte sous {{ user.username }} | 
+        <a href="{% url 'accounts:logout' %}">deconnexion </a></p>
+    {% else %}
+        <p><a href="{% url 'accounts:login' %}">connexion </a> |
+            <a href="{% url 'accounts:register' %}">Inscription</a>
+        </p>
+    {% endif %}
+    <h1>Welcome on manga channel </h1>
+    
+    <p><a href="{% url 'manga:add'  %}">+ AJOUTER LIVRE</a></p>
+    <table>
+        <tr>
+            <th>NOM</th>
+            <th>AUTEUR</th>
+            <th>QTE</th>
+            <th colspan="2">ACTION</th>
+        </tr>
+        {% for book in books %}
+            <tr>
+                <td><a href="{% url 'manga:show' book.id %}">{{book.title}}</a></td>
+                <td>{{ book.author}}</td>
+                <td>{{ book.quantity }}</td>
+                <td><a href="{% url 'manga:edit' book.id %}">edit</a></td>
+                <td><a href="{% url 'manga:remove' book.id %}">remove</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% include 'manga/begin_end/end.html' %}

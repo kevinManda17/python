@@ -1,0 +1,63 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+   <center>
+    <h1> All Events </h1><br><br>
+    <a href="{% url 'add-event' %}" class="btn btn-outline-primary">
+        Going to Add events
+    </a><br><br><br>
+{% comment %}
+    <a href="{% url 'event-list1' %}" class="btn btn-outline-primary">
+      Going to events list with rawsql 
+    </a><br><br><br>
+{% endcomment %}
+   </center>
+
+            {% for event in events_list %}
+
+
+        <div class="card">
+            <div class="card-header">
+                {{ event }}
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Venue : {{ event.venue }}</h5>
+              <p class="card-text">
+                <ul>
+                    <li class="text-success"> Date : {{ event.event_date }}</li> 
+                    <li>Days Till: {{ event.days_till }}</li>
+                    <li>Occured: {{ event.is_past }}</li>
+                    <li>Manager : {{ event.manager }}</li>
+                    <li>Description : <br>&emsp; {{ event.description }}</li> 
+                    <li>attendees : <br> &emsp;
+                    {% for user in event.attendees.all %}
+                         {{ user }} <br>&emsp;
+                    {% endfor %}
+                    </li>
+                </ul>
+              </p>
+            </div>
+
+
+            <div class="card-footer text-body-secondary">
+              {% if user.is_authenticated %}
+                  {% if user == event.manager %}
+                  
+                    <a href="{% url 'update-event' event.id %}" class="btn btn-outline-secondary btn-sm">Update Event </a>
+                    <a href="{% url 'delete-event' event.id %}" class="btn btn-outline-danger btn-sm">Delete Event </a>
+              
+                {% elif event.manager == None %}
+                                        
+                    <a href="{% url 'update-event' event.id %}" class="btn btn-outline-secondary btn-sm">Update Event </a>
+                    <a href="{% url 'delete-event' event.id %}" class="btn btn-outline-danger btn-sm">Delete Event </a>
+                    {% endif %}
+              {% endif %} 
+              </div>
+
+
+          </div>
+          <br><br>
+        {% endfor %}
+
+{% endblock %}
+

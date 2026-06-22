@@ -1,0 +1,27 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            venue
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ venue }}</h5>
+          <p class="card-text">
+            <ul>
+                   {{ venue.name }}<br>
+                   {{ venue.address }}<br>
+                   {{ venue.zip_code }}<br>
+                   {{ venue.phone }}<br>
+                  <a href="{{ venue.web }}">{{ venue.email_address }}</a><br>
+
+            </ul>
+            {% comment %}
+            <a href="{% url 'return-search-venues' %}">Going Back To Search Venues </a>    
+            {% endcomment %}
+          </p>
+        </div>
+      </div>
+      <br><br>
+{% endblock %}

@@ -1,0 +1,7 @@
+openai
+langchain
+pypdf2
+pdfplumber
+faiss-cpu
+tk
+python-dotenv

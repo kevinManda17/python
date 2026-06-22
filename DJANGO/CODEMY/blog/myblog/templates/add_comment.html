@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %} Add Comment {% endblock%} 
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+    <h1>Add Comment ... </h1>
+    <br> <br>
+    <div class="col-8">
+        <div class="form-group">
+            <form method= "POST" >
+                {% csrf_token %}
+                {{ form.as_p }}
+                <center>
+                <button class="btn btn-outline-primary btn-sm "> Add Comment </button>
+                </center>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <center>
+    <br> <br>
+        <h3 class="text-warning ">You are not allowed here ! ( <p class="text-danger">And you know it ...</p>  )</h3>
+    </center>
+    {% endif %}
+</div>
+{% endblock %}

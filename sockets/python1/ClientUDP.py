@@ -1,0 +1,12 @@
+import socket 
+
+addrPort = ("127.0.0.1", 3000)
+
+client= socket.socket(socket.AF_INET , socket.SOCK_DGRAM)
+
+client.sendto(b"hello from client ", addrPort)
+msgServer= client.recv(4196).decode("utf-8")
+
+print("Message du serveur : ",msgServer)
+
+client.close()

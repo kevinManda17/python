@@ -1,0 +1,21 @@
+{% load static %}
+{% load customtags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'global.css'%}">
+    <link rel="stylesheet" href="{% static 'MANGALIB_k/css/mystyle.css' %}">
+    <title>Mes Mangas</title>
+</head>
+<body>
+    <h1>Welcome on MangaLib_k channel !</h1>
+   <ul>
+        {%for book in books%}
+            <li><a href="{% url 'MANGALIB_k:show' book.id %}" style="color:white">{{book.title}}</a></li>
+        {%endfor%}
+   </ul>
+   <p><a href="{%url 'MANGALIB_k:Add' %}">add here</a></p>
+</body>
+</html>
